@@ -1,9 +1,9 @@
 {
   "id": "shiju-quote-cards",
-  "name": "Catch",
+  "name": "Capture",
   "version": "0.1.0",
   "minAppVersion": "1.5.0",
   "description": "把笔记中的摘句生成带日期、作者和 Obsidian 来源标识的分享卡片。",
-  "author": "Catch",
+  "author": "Luke Chen",
   "isDesktopOnly": false
 }

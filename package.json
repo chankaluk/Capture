@@ -1,5 +1,5 @@
 {
-  "name": "catch-obsidian-card",
+  "name": "capture-obsidian-card",
   "version": "0.1.0",
   "description": "Obsidian quote card generator",
   "main": "main.js",

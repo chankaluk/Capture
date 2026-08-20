@@ -26,7 +26,7 @@ type CardRatio = "square" | "portrait" | "landscape";
 
 const DEFAULT_SETTINGS: ShijuSettings = {
   authorName: "你的名字",
-  saveFolder: "Attachments/Catch",
+  saveFolder: "Attachments/Capture",
   defaultTheme: "paper",
   defaultRatio: "square",
   showVaultName: false,
@@ -66,7 +66,7 @@ export default class ShijuPlugin extends Plugin {
           menu.addSeparator();
           menu.addItem((item) =>
             item
-              .setTitle("使用 Catch 生成卡片")
+              .setTitle("使用 Capture 生成卡片")
               .setIcon("quote")
               .onClick(() => this.openCardModal(editor, view)),
           );
@@ -74,7 +74,7 @@ export default class ShijuPlugin extends Plugin {
       ),
     );
 
-    this.addRibbonIcon("quote", "Catch：生成摘录卡片", () => {
+    this.addRibbonIcon("quote", "Capture：生成摘录卡片", () => {
       const view = this.app.workspace.getActiveViewOfType(MarkdownView);
       const selection = view?.editor.getSelection().trim();
       if (!view || !selection) {
@@ -134,6 +134,10 @@ export default class ShijuPlugin extends Plugin {
 
   async loadSettings(): Promise<void> {
     this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
+    if (this.settings.saveFolder === "Attachments/Catch") {
+      this.settings.saveFolder = "Attachments/Capture";
+      await this.saveData(this.settings);
+    }
   }
 
   async saveSettings(): Promise<void> {
@@ -155,7 +159,7 @@ class QuoteCardModal extends Modal {
 
   onOpen(): void {
     this.modalEl.addClass("shiju-modal");
-    this.titleEl.setText("Catch");
+    this.titleEl.setText("Capture");
 
     const layout = this.contentEl.createDiv({ cls: "shiju-layout" });
     const controls = layout.createDiv({ cls: "shiju-controls" });
@@ -268,7 +272,7 @@ class QuoteCardModal extends Modal {
       if (folder) await ensureFolder(this.app, folder);
 
       const basename = sanitizeFilename(
-        `Catch-${this.data.noteName}-${Date.now()}.png`,
+        `Capture-${this.data.noteName}-${Date.now()}.png`,
       );
       const path = normalizePath(folder ? `${folder}/${basename}` : basename);
       await this.app.vault.createBinary(path, await blob.arrayBuffer());
@@ -296,7 +300,7 @@ class QuoteCardModal extends Modal {
       const link = document.createElement("a");
       const url = URL.createObjectURL(blob);
       link.href = url;
-      link.download = sanitizeFilename(`Catch-${this.data.noteName}.png`);
+      link.download = sanitizeFilename(`Capture-${this.data.noteName}.png`);
       link.click();
       window.setTimeout(() => URL.revokeObjectURL(url), 1000);
     } catch (error) {
@@ -314,7 +318,7 @@ class ShijuSettingTab extends PluginSettingTab {
   display(): void {
     const { containerEl } = this;
     containerEl.empty();
-    containerEl.createEl("h2", { text: "Catch 设置" });
+    containerEl.createEl("h2", { text: "Capture 设置" });
 
     new Setting(containerEl)
       .setName("作者名")
@@ -334,7 +338,7 @@ class ShijuSettingTab extends PluginSettingTab {
       .setDesc("相对于当前 Vault 根目录")
       .addText((text) =>
         text
-          .setPlaceholder("Attachments/Catch")
+          .setPlaceholder("Attachments/Capture")
           .setValue(this.plugin.settings.saveFolder)
           .onChange(async (value) => {
             this.plugin.settings.saveFolder = value.trim();
@@ -419,7 +423,7 @@ function drawCard(
   ctx.fillStyle = palette.accent;
   ctx.font = `600 ${Math.round(Math.min(width, height) * 0.021)}px -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif`;
   ctx.letterSpacing = `${Math.max(2, width * 0.003)}px`;
-  ctx.fillText("CATCH  ·  QUOTE FROM MY NOTES", side, top);
+  ctx.fillText("CAPTURE  ·  QUOTE FROM MY NOTES", side, top);
   ctx.letterSpacing = "0px";
 
   const quoteTop = top + Math.round(height * 0.12);

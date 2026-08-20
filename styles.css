@@ -1,0 +1,97 @@
+.shiju-modal {
+  width: min(1120px, 94vw);
+  max-width: 1120px;
+}
+
+.shiju-modal .modal-content {
+  overflow: visible;
+}
+
+.shiju-layout {
+  display: grid;
+  grid-template-columns: minmax(300px, 0.78fr) minmax(360px, 1.22fr);
+  gap: 28px;
+  align-items: start;
+}
+
+.shiju-controls .setting-item {
+  display: block;
+  padding: 10px 0;
+}
+
+.shiju-controls .setting-item-info {
+  margin-bottom: 7px;
+}
+
+.shiju-controls .setting-item-control,
+.shiju-controls input,
+.shiju-controls textarea,
+.shiju-controls select {
+  width: 100%;
+}
+
+.shiju-controls textarea {
+  resize: vertical;
+  line-height: 1.6;
+}
+
+.shiju-preview-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 520px;
+  padding: 20px;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 14px;
+  background: var(--background-secondary);
+}
+
+.shiju-preview-wrap.is-landscape {
+  min-height: 390px;
+}
+
+.shiju-canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 66vh;
+  object-fit: contain;
+  border-radius: 7px;
+  box-shadow: 0 18px 46px rgba(0, 0, 0, 0.2);
+}
+
+.shiju-hint {
+  margin: 14px 0;
+  padding: 10px 12px;
+  border-left: 3px solid var(--interactive-accent);
+  border-radius: 5px;
+  color: var(--text-muted);
+  background: var(--background-secondary);
+  font-size: var(--font-ui-small);
+  line-height: 1.55;
+}
+
+.shiju-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 18px;
+}
+
+.shiju-actions button {
+  width: auto;
+}
+
+@media (max-width: 800px) {
+  .shiju-modal {
+    width: 94vw;
+  }
+
+  .shiju-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .shiju-preview-wrap {
+    min-height: 320px;
+  }
+}
